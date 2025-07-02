@@ -32,6 +32,7 @@ const Sidebar = () => {
     { name: 'CHAT AGENT', href: '/chat-agent', icon: FiMessageCircle },
     { name: 'ROADMAP', href: '/roadmap', icon: FiMap },
     { name: 'COURSE GENERATOR', href: '/course-generator', icon: FiBook },
+    { name: 'PORTFOLIO GENERATOR', href: '/portfolio-generator', icon: FiFileText },
     { name: 'FEEDBACK', href: '/feedback', icon: FiFeedback },
   ];
 
