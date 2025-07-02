@@ -14,6 +14,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "jsxImportSource": "react",
+    "types": ["node", "react", "react-dom"],
     "plugins": [
       {
         "name": "next"
