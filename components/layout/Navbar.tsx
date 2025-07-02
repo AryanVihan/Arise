@@ -41,6 +41,7 @@ const Navbar = () => {
     { name: 'DASHBOARD', href: '/dashboard' },
     { name: 'INTERVIEW', href: '/interview' },
     { name: 'RESUME ANALYZER', href: '/resume-analyzer' },
+    { name: 'COVER LETTER', href: '/cover-letter' },
     { name: 'CHAT AGENT', href: '/chat-agent' },
     { name: 'ROADMAP', href: '/roadmap' },
     { name: 'FEEDBACK', href: '/feedback' },
