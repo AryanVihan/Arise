@@ -1,71 +1,75 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useCallback, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiPlus, FiX, FiLink, FiUser, FiAward, FiFileText } from 'react-icons/fi';
 
-interface Project {
-  id: number;
+type Project = {
+  id: string;
   name: string;
   url: string;
   description: string;
-}
+};
 
-interface FormData {
+type FormData = {
   name: string;
   tagline: string;
   about: string;
   skills: string;
   projects: Project[];
-}
+};
 
-interface PersonalInfoFormProps {
+type PersonalInfoFormProps = {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   onGenerate: () => void;
-}
+};
 
 const PersonalInfoForm = ({ formData, setFormData, onGenerate }: PersonalInfoFormProps) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Memoize the form fields to prevent unnecessary re-renders
+  const { name, tagline, about, skills, projects } = formData;
+
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, [setFormData]);
 
-  const handleProjectChange = (id: number, field: keyof Project, value: string) => {
+  const handleProjectChange = useCallback((id: string, field: keyof Project, value: string) => {
     setFormData(prev => ({
       ...prev,
       projects: prev.projects.map(project => 
         project.id === id ? { ...project, [field]: value } : project
       )
     }));
-  };
+  }, [setFormData]);
 
-  const addProject = () => {
+  const addProject = useCallback(() => {
     setFormData(prev => ({
       ...prev,
       projects: [
-        ...prev.projects, 
+        ...prev.projects,
         { 
-          id: Date.now(), // This generates a number
+          id: Date.now().toString(), // Convert to string to match the type
           name: '', 
           url: '', 
           description: '' 
         }
       ]
     }));
-  };
+  }, [setFormData]);
 
-  const removeProject = (id: number) => {
+  const removeProject = useCallback((id: string) => {
     if (formData.projects.length > 1) {
       setFormData(prev => ({
         ...prev,
         projects: prev.projects.filter(project => project.id !== id)
       }));
     }
-  };
+  }, [formData.projects.length, setFormData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
