@@ -1,9 +1,23 @@
 import { generatePageMetadata } from "@/utils/page-utils";
 import { Suspense } from 'react';
-import ResumeAnalyzerContent from "@/components/resume-analyzer/ResumeAnalyzerContent";
+import dynamic from 'next/dynamic';
 
 // This export is required for static generation
 export const metadata = generatePageMetadata("Resume Analyzer");
+
+// Dynamically import the client component with SSR disabled
+const ResumeAnalyzerContent = dynamic(
+  () => import('@/components/resume-analyzer/ResumeAnalyzerContent'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="text-center py-12">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+        <p className="mt-2 text-gray-400">Loading analyzer...</p>
+      </div>
+    )
+  }
+);
 
 export default function ResumeAnalyzerPage() {
   return (
@@ -16,15 +30,8 @@ export default function ResumeAnalyzerPage() {
           Upload your resume to get instant feedback and improvement suggestions
         </p>
       </div>
-
-      <Suspense fallback={
-        <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
-          <p className="mt-2 text-gray-400">Loading analyzer...</p>
-        </div>
-      }>
-        <ResumeAnalyzerContent />
-      </Suspense>
+      
+      <ResumeAnalyzerContent />
     </div>
   );
 }

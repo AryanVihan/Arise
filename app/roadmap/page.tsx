@@ -1,7 +1,9 @@
-import { generatePageMetadata, PageContent } from "@/utils/page-utils";
+import { generatePageMetadata } from "@/utils/page-utils";
+import RoadmapClientWrapper from "./RoadmapClientWrapper";
 
-export const metadata = generatePageMetadata("Roadmap");
+// This export is required for static generation
+export const metadata = generatePageMetadata("Career Roadmap");
 
 export default function RoadmapPage() {
-  return <PageContent title="Roadmap" />;
+  return <RoadmapClientWrapper />;
 }

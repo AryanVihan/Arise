@@ -11,6 +11,7 @@ export const generatePageMetadata = (title: string): Metadata => ({
   title: `${title} | ARISE`,
   description: `${title} page of ARISE - Your personal career development platform`,
   // Add any other metadata you need
+  // A.R.I.S.E. => AI Recruitment & Interview Simulation Engine
 });
 
 interface PageContentProps {
