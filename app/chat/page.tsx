@@ -16,7 +16,7 @@ type Message = {
   timestamp: Date;
 };
 
-export default function ChatAgentPage() {
+export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -25,7 +25,7 @@ export default function ChatAgentPage() {
   useEffect(() => {
     const welcomeMessage: Message = {
       id: '1',
-      content: 'Hello! I\'m your AI career assistant. How can I help you today?',
+      content: 'Hello! I\'m your AI assistant. How can I help you today?',
       isUser: false,
       timestamp: new Date(),
     };
@@ -59,7 +59,7 @@ export default function ChatAgentPage() {
     setTimeout(() => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: `I received your message: "${inputValue}". This is a simulated response.\n\nHere's what I can help you with:\n- Career advice and guidance\n- Resume and interview tips\n- Job search strategies\n- Professional development`,
+        content: `I received your message: "${inputValue}". This is a simulated response.\n\nHere's some **Markdown** examples:\n- Bullet points\n- _Italic_ and **bold** text\n- [Links](https://example.com)\n\n\`\`\`javascript\n// Code blocks\nfunction hello() {\n  console.log('Hello, world!');\n}\n\`\`\``,
         isUser: false,
         isTyping: false,
         timestamp: new Date(),
@@ -112,6 +112,16 @@ export default function ChatAgentPage() {
       label: '🎯 Career Advice',
       onClick: () => handleQuickPrompt('What are the most in-demand skills for a senior developer in 2023?')
     },
+    {
+      id: 'code-review',
+      label: '👨‍💻 Code Review',
+      onClick: () => handleQuickPrompt('Can you review this code for best practices?')
+    },
+    {
+      id: 'salary-negotiation',
+      label: '💰 Salary Negotiation',
+      onClick: () => handleQuickPrompt('How should I negotiate my salary for a new job offer?')
+    },
   ];
 
   return (
@@ -121,7 +131,7 @@ export default function ChatAgentPage() {
           <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
             AI Career Assistant
           </h1>
-          <p className="text-gray-400">Get personalized career guidance and support</p>
+          <p className="text-gray-400">Ask me anything about your career development</p>
         </header>
 
         <div className="flex-1 overflow-hidden mb-4">
@@ -138,7 +148,7 @@ export default function ChatAgentPage() {
               onChange={setInputValue}
               onSend={handleSendMessage}
               onFileUpload={handleFileUpload}
-              placeholder="Ask me anything about your career..."
+              placeholder="Type your message..."
               className="w-full"
             />
           </div>

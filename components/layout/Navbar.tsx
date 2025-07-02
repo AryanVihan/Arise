@@ -45,6 +45,13 @@ const Navbar = () => {
     { name: 'ROADMAP', href: '/roadmap' },
     { name: 'FEEDBACK', href: '/feedback' },
   ];
+  
+  // Get current path for active link highlighting
+  const [currentPath, setCurrentPath] = useState('');
+  
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
 
   const userNavigation = [
     { name: 'Profile', icon: FiUser, href: '#' },
@@ -148,22 +155,43 @@ const Navbar = () => {
                       className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-gray-900/95 backdrop-blur-sm border border-cyan-500/20 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none p-1"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <a
-                              href={item.href}
-                              className={`${
-                                active ? 'bg-cyan-900/30' : ''
-                              } ${
-                                item.className || 'text-gray-300'
-                              } group flex w-full items-center rounded-md px-4 py-2 text-sm font-mono`}
-                            >
-                              <item.icon className="mr-3 h-5 w-5" />
-                              {item.name}
-                            </a>
+                      {navLinks.map((item) => {
+                      const isActive = currentPath === item.href;
+                      const isChatAgent = item.name === 'CHAT AGENT';
+                      
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={`block px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                            isActive
+                              ? isChatAgent
+                                ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/20'
+                                : 'bg-gray-800 text-white'
+                              : isChatAgent
+                              ? 'bg-gradient-to-r from-purple-600/70 to-blue-600/70 text-white hover:from-purple-600 hover:to-blue-600 hover:shadow-lg hover:shadow-purple-500/20'
+                              : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                          }`}
+                        >
+                          {item.name}
+                          {isChatAgent && (
+                            <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold bg-white/20 rounded-full">
+                              NEW
+                            </span>
                           )}
-                        </Menu.Item>
+                        </Link>
+                      );
+                    })}
+                      {userNavigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={`block px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                            item.className
+                          }`}
+                        >
+                          {item.name}
+                        </Link>
                       ))}
                     </Menu.Items>
                   </Transition>
@@ -212,7 +240,7 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="block px-4 py-3 rounded-md text-base font-mono tracking-wider text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 transition-colors duration-200 border border-transparent hover:border-cyan-500/20"
+                  className={`block px-4 py-3 rounded-md text-base font-mono tracking-wider text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 transition-colors duration-200 border border-transparent hover:border-cyan-500/20`}
                   onClick={() => setIsOpen(false)}
                 >
                   <span className="text-cyan-400 mr-2">›</span>
@@ -247,17 +275,43 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="mt-2 space-y-1">
+                  {navLinks.map((item) => {
+                    const isActive = currentPath === item.href;
+                    const isChatAgent = item.name === 'CHAT AGENT';
+                    
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                          isActive
+                            ? isChatAgent
+                              ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/20'
+                              : 'text-white bg-gray-900'
+                            : isChatAgent
+                            ? 'bg-gradient-to-r from-purple-600/70 to-blue-600/70 text-white hover:from-purple-600 hover:to-blue-600 hover:shadow-lg hover:shadow-purple-500/20'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        }`}
+                      >
+                        {item.name}
+                        {isChatAgent && (
+                          <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold bg-white/20 rounded-full">
+                            NEW
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
                   {userNavigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
-                      className={`block px-4 py-2 text-sm ${
-                        item.className || 'text-gray-300 hover:text-cyan-400'
-                      } hover:bg-gray-800/50 rounded-md transition-colors duration-200`}
+                      className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                        item.className
+                      }`}
                     >
-                      <item.icon className="inline-block mr-2 h-4 w-4" />
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
