@@ -1,9 +1,10 @@
 'use client';
 
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 
 type LayoutProps = {
   children: ReactNode;
@@ -65,8 +66,10 @@ const Layout = ({ children }: LayoutProps) => {
     }),
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-gray-100 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-gray-100 overflow-hidden flex flex-col">
       {/* Background Elements */}
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-900/20 via-transparent to-transparent">
         <CyberGlyphs />
@@ -92,27 +95,34 @@ const Layout = ({ children }: LayoutProps) => {
       </AnimatePresence>
 
       {/* Navbar */}
-      <Navbar />
+      <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      {/* Main Content */}
-      <main className="relative z-10 min-h-[calc(100vh-5rem)] pt-20">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            className="max-w-7xl mx-auto px-6 w-full"
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-      </main>
+      <div className="flex flex-1 pt-20">
+        {/* Sidebar */}
+        <div className={`sidebar-container hidden md:block ${isSidebarOpen ? '' : 'hidden'}`}>
+          <Sidebar />
+        </div>
+
+        {/* Main Content */}
+        <main className="relative z-10 flex-1 min-w-0 transition-all duration-300 ease-in-out">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pathname}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageVariants}
+              className="min-h-[calc(100vh-5rem)] p-6 md:p-8 lg:p-10"
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      </div>
 
       {/* Subtle animated grid overlay */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik02MCAwSDIwdjYwaDQweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0yMCAyMGgyME0yMCA0MGgyME0yMCA2MGgyME02MCAyMGgyME02MCA0MGgyME02MCA2MGgyME0wIDIwaDBNMCA0MGgwTTAgNjBoMCIgc3Ryb2tlPSJyZ2JhKDE2NSwgMTgwLCAyNTIsIDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIG9wYWNpdHk9IjAuMiIvPjwvc3ZnPg==')] opacity-5"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik02MCAwSDIwdjYwaDQweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0yMCAyMGgyME0yMCA0MGgyME0yMCA2MGgyME06MCAyMGgyME06MCA0MGgyME06MCA2MGgyME0wIDIwaDBNMCA0MGgwTTAgNjBoMCIgc3Ryb2tlPSJyZ2JhKDE2NSwgMTgwLCAyNTIsIDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIG9wYWNpdHk9IjAuMiIvPjwvc3ZnPg==')] opacity-5"></div>
       </div>
     </div>
   );
