@@ -43,6 +43,7 @@ const Navbar = () => {
     { name: 'RESUME ANALYZER', href: '/resume-analyzer' },
     { name: 'CHAT AGENT', href: '/chat-agent' },
     { name: 'ROADMAP', href: '/roadmap' },
+    { name: 'FEEDBACK', href: '/feedback' },
   ];
 
   const userNavigation = [

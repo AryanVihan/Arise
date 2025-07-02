@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ProgressBar } from './ProgressBar';
+import { ProgressBar } from '@/components/ProgressBar';
 
 const progressItems = [
   {

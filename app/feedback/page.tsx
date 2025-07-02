@@ -1,7 +1,15 @@
-import { generatePageMetadata, PageContent } from "@/utils/page-utils";
+import { Metadata } from 'next';
+import FeedbackContent from './FeedbackContent';
 
-export const metadata = generatePageMetadata("Feedback");
+export const metadata: Metadata = {
+  title: 'Feedback | Arise',
+  description: 'Review your interview feedback and performance metrics',
+};
 
 export default function FeedbackPage() {
-  return <PageContent title="Feedback" />;
+  return (
+    <div suppressHydrationWarning>
+      <FeedbackContent />
+    </div>
+  );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,30 +13,100 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Default metadata for the application
 export const metadata: Metadata = {
-  title: "ARISE - Ascend Beyond",
-  description: "A divine interface for career ascension and personal growth",
-  themeColor: "#0f172a", // Dark theme color for mobile browsers
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  title: {
+    default: 'ARISE - Ascend Beyond',
+    template: '%s | ARISE',
+  },
+  description: 'A divine interface for career ascension and personal growth. Transform your career with AI-powered interview preparation and skill development.',
+  keywords: [
+    'interview preparation',
+    'career growth',
+    'AI interview coach',
+    'job interview practice',
+    'career development',
+    'skills assessment',
+  ],
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
+  ],
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://arise.vercel.app'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
+  manifest: '/site.webmanifest',
   openGraph: {
     title: 'ARISE - Ascend Beyond',
-    description: 'A divine interface for career ascension and personal growth',
+    description: 'Transform your career with AI-powered interview preparation and skill development',
     url: 'https://arise.vercel.app',
     siteName: 'ARISE',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ARISE - Ascend Beyond',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ARISE - Ascend Beyond',
-    description: 'A divine interface for career ascension and personal growth',
+    description: 'Transform your career with AI-powered interview preparation',
     creator: '@arise',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+    yandex: 'your-yandex-verification-code',
+  },
+  appleWebApp: {
+    title: 'ARISE',
+    statusBarStyle: 'default',
+  },
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
+  applicationName: 'ARISE',
+  other: {
+    'msapplication-TileColor': '#0f172a',
   },
 };
 
