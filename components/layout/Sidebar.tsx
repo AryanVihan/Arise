@@ -13,13 +13,7 @@ import {
   FiBook, 
   FiMessageSquare as FiFeedback 
 } from 'react-icons/fi';
-import dynamic from 'next/dynamic';
 
-// Dynamically import the component with SSR disabled to avoid hydration issues
-const CompactGoalSelector = dynamic(
-  () => import('@/components/courses/CompactGoalSelector'),
-  { ssr: false }
-);
 
 type NavLink = {
   name: string;
@@ -78,11 +72,6 @@ const Sidebar = () => {
               );
             })}
           </nav>
-          
-          {/* Learning Goals Section */}
-          <div className="px-4 py-3 border-t border-gray-800">
-            <CompactGoalSelector />
-          </div>
         </div>
         <div className="flex-shrink-0 flex border-t border-gray-800 p-4">
           <div className="flex items-center">

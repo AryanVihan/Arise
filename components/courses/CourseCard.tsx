@@ -14,6 +14,7 @@ interface CourseCardProps {
   url: string;
   isRecommended?: boolean;
   className?: string;
+  onMouseMove?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const difficultyColors = {
@@ -37,18 +38,20 @@ const CourseCard = ({
   url,
   isRecommended = false,
   className = '',
+  onMouseMove,
 }: CourseCardProps) => {
   return (
     <motion.div
-      className={`relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900 ${className}`}
       whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      onMouseMove={onMouseMove}
     >
-      {/* Recommended Ribbon */}
-      {isRecommended && (
-        <div className="absolute -right-8 top-6 transform rotate-45 bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-xs font-bold px-8 py-1 shadow-lg">
-          Recommended
-        </div>
+        {/* Recommended Ribbon */}
+        {isRecommended && (
+          <div className="absolute -right-8 top-6 transform rotate-45 bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-xs font-bold px-8 py-1 shadow-lg">
+            Recommended
+          </div>
       )}
 
       <div className="p-6">
